@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kollégiumi Kocsma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- LOGIN NÉZET -->
+    <section id="login-view">
+      <div class="card login-card">
+        <h1 class="brand">Kollégiumi Kocsma</h1>
+        <p class="tagline">a papírcetli digitális utódja</p>
+        <form id="login-form">
+          <input type="email" id="login-email" placeholder="Email cím" required />
+          <input type="password" id="login-password" placeholder="Jelszó" required />
+          <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+        </form>
+        <p id="login-error" class="error"></p>
+      </div>
+    </section>
+
+    <!-- BEJELENTKEZETT NÉZET -->
+    <section id="main-view" style="display: none;">
+
+      <header class="topbar">
+        <h1 class="brand">Kollégiumi Kocsma</h1>
+        <div class="topbar-right">
+          <p id="welcome-text" class="welcome"></p>
+          <button id="logout-btn" class="btn btn-ghost">Kijelentkezés</button>
+        </div>
+      </header>
+
+      <div class="card">
+        <h2 class="section-title">Fogyasztás felírása</h2>
+        <div id="product-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="balance-row">
+          <h2 class="section-title">Egyenlegem</h2>
+          <span id="balance-text" class="balance-amount">...</span>
+        </div>
+        <h3 class="subsection-title">Eddigi tételeim</h3>
+        <table id="transactions-table" class="ledger-table">
+          <thead>
+            <tr>
+              <th>Dátum</th>
+              <th>Termék</th>
+              <th class="num-col">Ár</th>
+            </tr>
+          </thead>
+          <tbody id="transactions-body"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Mindenki egyenlege</h2>
+        <table id="all-balances-table" class="ledger-table">
+          <thead>
+            <tr>
+              <th>Név</th>
+              <th class="num-col">Tartozás</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="all-balances-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Admin: kiválasztott user tranzakcióinak részletes listája -->
+      <div id="admin-detail-view" class="card admin-detail" style="display: none;">
+        <div class="admin-detail-header">
+          <h3 id="admin-detail-title"></h3>
+          <button id="admin-detail-close-btn" class="btn btn-ghost btn-small">Bezárás</button>
+        </div>
+
+        <p class="outstanding-line">Aktuális tartozás: <strong id="admin-detail-balance">...</strong></p>
+
+        <div id="payment-form">
+          <input type="number" id="payment-amount" placeholder="Befizetett összeg (Ft)" />
+          <button id="payment-submit-btn" class="btn btn-primary">Befizetés rögzítése</button>
+          <button id="payment-full-btn" class="btn btn-secondary">Teljes tartozás kifizetve</button>
+        </div>
+
+        <h4 class="subsection-title">Tételek</h4>
+        <table id="admin-detail-table" class="ledger-table">
+          <thead>
+            <tr>
+              <th>Dátum</th>
+              <th>Termék</th>
+              <th class="num-col">Ár</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="admin-detail-body"></tbody>
+        </table>
+
+       <h4 class="subsection-title">Befizetések</h4>
+<table id="admin-payments-table" class="ledger-table">
+  <thead>
+    <tr>
+      <th>Dátum</th>
+      <th class="num-col">Összeg</th>
+      <th>Rögzítette</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="admin-payments-body"></tbody>
+</table>
+      </div>
+
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>

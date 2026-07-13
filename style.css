@@ -1,0 +1,328 @@
+:root {
+  --bg: #1B2420;
+  --surface: #232F29;
+  --surface-raised: #29362F;
+  --ink: #EDE6D6;
+  --ink-dim: #A9B2A6;
+  --accent: #C99A3E;
+  --accent-dim: #8C6C2C;
+  --debt: #C4694F;
+  --paid: #6F9873;
+  --line: rgba(237, 230, 214, 0.12);
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 24px 16px 60px;
+  line-height: 1.5;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* --- Tipográfia --- */
+
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.tagline {
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  margin: 4px 0 24px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 0 0 12px;
+}
+
+.subsection-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  margin: 20px 0 8px;
+}
+
+/* --- Kártyák --- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.login-card {
+  max-width: 360px;
+  margin: 60px auto 0;
+  text-align: center;
+}
+
+/* --- Fejléc (bejelentkezve) --- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.welcome {
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* --- Form elemek --- */
+
+input {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+}
+
+input::placeholder {
+  color: var(--ink-dim);
+}
+
+input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* --- Gombok --- */
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.05s ease, opacity 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #201505;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--paid);
+  color: #10190F;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+}
+
+.btn-ghost:hover {
+  color: var(--ink);
+  border-color: var(--ink-dim);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* Termék-lista gombjai */
+#product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#product-list button {
+  font-family: 'Inter', sans-serif;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#product-list button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --- Egyenleg kiemelés --- */
+
+.balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.balance-amount {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--debt);
+}
+
+.outstanding-line {
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+}
+
+.outstanding-line strong {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--debt);
+}
+
+/* --- Táblázatok ("nyugta" stílus) --- */
+
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.ledger-table thead th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-dim);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 500;
+}
+
+.ledger-table .num-col {
+  text-align: right;
+}
+
+.ledger-table td {
+  padding: 8px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-family: 'Inter', sans-serif;
+}
+
+.ledger-table td:nth-child(2),
+.ledger-table td:nth-child(3) {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ledger-table td button {
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  color: var(--debt);
+  border: 1px solid var(--line);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.ledger-table td button:hover {
+  border-color: var(--debt);
+}
+
+/* --- Admin panel --- */
+
+.admin-detail {
+  border-color: var(--accent-dim);
+}
+
+.admin-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+#payment-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+#payment-form input {
+  flex: 1;
+  min-width: 140px;
+  margin-bottom: 0;
+}
+
+.error {
+  color: var(--debt);
+  font-size: 0.85rem;
+}
+
+/* --- Mobil finomítás --- */
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px 10px 60px;
+  }
+  .card {
+    padding: 16px;
+  }
+  #payment-form {
+    flex-direction: column;
+  }
+  #payment-form input,
+  #payment-form button {
+    width: 100%;
+  }
+}
