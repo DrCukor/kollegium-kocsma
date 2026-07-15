@@ -179,7 +179,7 @@ input:focus {
 /* Termék-lista gombjai */
 #product-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
 }
 
@@ -192,11 +192,6 @@ input:focus {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-}
-
-#product-list button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
 }
 
 /* --- Egyenleg kiemelés --- */
@@ -325,4 +320,410 @@ input:focus {
   #payment-form button {
     width: 100%;
   }
+}
+
+/* --- Szégyenfal (csak nagy képernyőn) --- */
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#shame-wall {
+  display: none; /* mobilon és kis képernyőn elrejtve */
+}
+
+#shame-wall.hidden {
+  display: none !important;
+}
+
+@media (min-width: 900px) {
+  #shame-wall {
+    display: block;
+    margin-top: 100px;
+    width: 450px;
+    flex-shrink: 0;
+    margin-left: 24px;
+    background: var(--surface);
+    border: 1px solid var(--accent-dim);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  #app {
+    flex: 1;
+    /* az #app saját max-width + margin:auto szabálya
+       (lásd a fájl elején) továbbra is középre igazítja a tartalmát,
+       függetlenül a szégyenfaltól */
+  }
+}
+
+.shame-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+  color: var(--debt);
+}
+
+#shame-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: shame-counter;
+}
+
+#shame-list li {
+  counter-increment: shame-counter;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.85rem;
+}
+
+#shame-list li:first-child {
+  font-size: 0.95rem;
+  color: var(--debt);
+}
+
+#shame-list li::before {
+  content: counter(shame-counter) ".";
+  color: var(--ink-dim);
+  margin-right: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.shame-name {
+  flex: 1;
+}
+
+.shame-amount {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--debt);
+}
+
+.shame-empty {
+  color: var(--paid);
+  font-size: 0.85rem;
+}
+
+/* --- Dicsőségfal: jobb oldalon, a legnagyobb túlfizetők --- */
+
+#glory-wall {
+  display: none;
+}
+
+#glory-wall.hidden {
+  display: none !important;
+}
+
+@media (min-width: 1200px) {
+  #glory-wall {
+    display: block;
+    width: 450px;
+    margin-top: 100px;
+    flex-shrink: 0;
+    margin-right: 24px;
+    background: var(--surface);
+    border: 1px solid var(--paid);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+}
+
+.glory-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+  color: var(--paid);
+}
+
+#glory-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: glory-counter;
+}
+
+#glory-list li {
+  counter-increment: glory-counter;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.85rem;
+}
+
+#glory-list li::before {
+  content: counter(glory-counter) ".";
+  color: var(--ink-dim);
+  margin-right: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.glory-name {
+  flex: 1;
+}
+
+.glory-amount {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--paid);
+}
+
+.glory-empty {
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}
+
+/* --- Év/hónap lenyitható lista (accordion) --- */
+
+.accordion-year {
+  margin-bottom: 8px;
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header::after {
+  content: "▸";
+  color: var(--ink-dim);
+  transition: transform 0.15s ease;
+}
+
+.accordion-header.open::after {
+  transform: rotate(90deg);
+}
+
+.year-header {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+}
+
+.accordion-month {
+  margin: 6px 0 6px 14px;
+}
+
+.month-header {
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px dashed var(--line);
+}
+
+.accordion-body {
+  padding: 8px 0 4px 6px;
+}
+
+.empty-text {
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+}
+
+/* --- Termék kereső + kategória szűrő --- */
+
+.product-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.product-filters input {
+  flex: 1;
+  min-width: 140px;
+  margin-bottom: 0;
+
+  
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.product-row:hover {
+  border-color: var(--accent);
+}
+
+.product-row .product-price {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.product-row:hover .product-price {
+  color: var(--accent);
+}
+
+.product-filters select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+#product-list mark {
+  background: var(--accent);
+  color: #201505;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* --- Modal alap (mennyiség-választóhoz és vonalkód-olvasóhoz is) --- */
+
+.scanner-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.scanner-modal.hidden {
+  display: none;
+}
+
+.scanner-box {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  max-width: 90vw;
+  width: 280px;
+}
+
+.scanner-box h3 {
+  font-family: 'Fraunces', serif;
+  margin: 0;
+  text-align: center;
+}
+
+#quantity-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.quantity-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.quantity-modal-actions .btn {
+  flex: 1;
+}
+
+/* --- Saját stílusú legördülő (mennyiség-választó) --- */
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-select-trigger::after {
+  content: "▾";
+  color: var(--ink-dim);
+  font-family: 'Inter', sans-serif;
+}
+
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  z-index: 20;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.custom-select-options.hidden {
+  display: none;
+}
+
+.custom-select-options li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.custom-select-options li:hover {
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.custom-select-options li.selected {
+  background: var(--accent);
+  color: #201505;
+  font-weight: 500;
 }

@@ -8,10 +8,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<meta name="theme-color" content="#1B2420" />
 </head>
 <body>
 
-  <div id="app">
+  <div class="layout">
+
+    <aside id="shame-wall" class="hidden">
+      <h2 class="shame-title">Szégyenfal</h2>
+      <ol id="shame-list"></ol>
+    </aside>
+
+    <div id="app">
 
     <!-- LOGIN NÉZET -->
     <section id="login-view">
@@ -39,9 +50,22 @@
       </header>
 
       <div class="card">
-        <h2 class="section-title">Fogyasztás felírása</h2>
-        <div id="product-list"></div>
-      </div>
+  <h2 class="section-title">Fogyasztás felírása</h2>
+
+  <div class="product-filters">
+    <input type="text" id="product-search" placeholder="Keresés..." />
+    <select id="category-filter">
+      <option value="all">Összes kategória</option>
+      <option value="sör">Sörök</option>
+      <option value="rövid">Rövidek</option>
+      <option value="rágcsa/kaja">Rágcsák/kaják</option>
+      <option value="üdítő">Üdítők</option>
+      <option value="bor">Borok</option>
+    </select>
+  </div>
+
+  <div id="product-list"></div>
+</div>
 
       <div class="card">
         <div class="balance-row">
@@ -49,12 +73,10 @@
           <span id="balance-text" class="balance-amount">...</span>
         </div>
         <h3 class="subsection-title">Eddigi tételeim</h3>
-        <table id="transactions-table" class="ledger-table">
+        <div id="transactions-container"></div>
           <thead>
             <tr>
-              <th>Dátum</th>
-              <th>Termék</th>
-              <th class="num-col">Ár</th>
+
             </tr>
           </thead>
           <tbody id="transactions-body"></tbody>
@@ -77,50 +99,57 @@
 
       <!-- Admin: kiválasztott user tranzakcióinak részletes listája -->
       <div id="admin-detail-view" class="card admin-detail" style="display: none;">
-        <div class="admin-detail-header">
-          <h3 id="admin-detail-title"></h3>
-          <button id="admin-detail-close-btn" class="btn btn-ghost btn-small">Bezárás</button>
-        </div>
-
-        <p class="outstanding-line">Aktuális tartozás: <strong id="admin-detail-balance">...</strong></p>
-
-        <div id="payment-form">
-          <input type="number" id="payment-amount" placeholder="Befizetett összeg (Ft)" />
-          <button id="payment-submit-btn" class="btn btn-primary">Befizetés rögzítése</button>
-          <button id="payment-full-btn" class="btn btn-secondary">Teljes tartozás kifizetve</button>
-        </div>
-
-        <h4 class="subsection-title">Tételek</h4>
-        <table id="admin-detail-table" class="ledger-table">
-          <thead>
-            <tr>
-              <th>Dátum</th>
-              <th>Termék</th>
-              <th class="num-col">Ár</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="admin-detail-body"></tbody>
-        </table>
-
-       <h4 class="subsection-title">Befizetések</h4>
-<table id="admin-payments-table" class="ledger-table">
-  <thead>
-    <tr>
-      <th>Dátum</th>
-      <th class="num-col">Összeg</th>
-      <th>Rögzítette</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="admin-payments-body"></tbody>
-</table>
-      </div>
-
-    </section>
+  <div class="admin-detail-header">
+    <h3 id="admin-detail-title"></h3>
+    <button id="admin-detail-close-btn" class="btn btn-ghost btn-small">Bezárás</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+  <div id="admin-only-section">
+    <p class="outstanding-line">Aktuális tartozás: <strong id="admin-detail-balance">...</strong></p>
+
+    <div id="payment-form">
+      <input type="number" id="payment-amount" placeholder="Befizetett összeg (Ft)" />
+      <button id="payment-submit-btn" class="btn btn-primary">Befizetés rögzítése</button>
+      <button id="payment-full-btn" class="btn btn-secondary">Teljes tartozás kifizetve</button>
+    </div>
+
+    <h4 class="subsection-title">Tételek</h4>
+    <div id="admin-detail-container"></div>
+  </div>
+
+  <h4 class="subsection-title">Befizetések</h4>
+  <table id="admin-payments-table" class="ledger-table">
+    <thead>
+      <tr>
+        <th>Dátum</th>
+        <th class="num-col">Összeg</th>
+        <th>Rögzítette</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="admin-payments-body"></tbody>
+  </table>
+</div>
+<div id="quantity-modal" class="scanner-modal hidden">
+  <div class="scanner-box">
+    <h3 id="quantity-modal-title"></h3>
+    <select id="quantity-select"></select>
+    <div class="quantity-modal-actions">
+      <button id="quantity-cancel-btn" class="btn btn-ghost">Mégse</button>
+      <button id="quantity-confirm-btn" class="btn btn-primary">Rögzítés</button>
+    </div>
+  </div>
+</div>
+
+    </section>
+    </div>
+   <aside id="glory-wall" class="hidden">
+      <h2 class="glory-title">Dicsőségfal</h2>
+      <ol id="glory-list"></ol>
+    </aside>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    </body>
+    </html>
